@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+
 import {
   StyleSheet,
   Text,
@@ -62,13 +64,16 @@ export default class App extends Component {
           onPressOut={this.buttonUp}
         >
           <View style={styles.button}>
-            <View style={styles.outer}>
+            <LinearGradient
+              style={styles.outer}
+              colors={["#6e6e6e", "#dedede", "#6e6e6e"]}
+            >
               <Animated.View style={[styles.height, heightStyle]}>
                 <Animated.View
                   style={[styles.inner, innerStyle]}
                 ></Animated.View>
               </Animated.View>
-            </View>
+            </LinearGradient>
           </View>
         </TouchableWithoutFeedback>
         <Text style={styles.text}>DO NOT PRESS</Text>
@@ -94,7 +99,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderRadius: 75,
-    backgroundColor: "#9e9d9d",
   },
 
   height: {
