@@ -58,27 +58,29 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback
-          onPressIn={this.handleSound}
-          onPressOut={this.buttonUp}
+        <LinearGradient
+          colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
+          style={styles.background}
         >
-          <View style={styles.button}>
-            <LinearGradient
-              style={styles.outer}
-              colors={["#6e6e6e", "#dedede", "#6e6e6e"]}
-            >
-              <Animated.View style={[styles.height, heightStyle]}>
-                <Animated.View style={innerStyle}>
-                  <LinearGradient
-                    colors={["#a10303", "#fc3838", "#a10303"]}
-                    style={[styles.inner]}
-                  />
+          <TouchableWithoutFeedback
+            onPressIn={this.handleSound}
+            onPressOut={this.buttonUp}
+          >
+            <View style={styles.button}>
+              <View style={styles.outer}>
+                <Animated.View style={[styles.height, heightStyle]}>
+                  <Animated.View style={innerStyle}>
+                    <LinearGradient
+                      colors={["#a10303", "#fc3838", "#a10303"]}
+                      style={styles.inner}
+                    />
+                  </Animated.View>
                 </Animated.View>
-              </Animated.View>
-            </LinearGradient>
-          </View>
-        </TouchableWithoutFeedback>
-        <Text style={styles.text}>DO NOT PRESS</Text>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.text}>DO NOT PRESS</Text>
+        </LinearGradient>
       </View>
     );
   }
@@ -87,7 +89,10 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+  },
+
+  background: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -101,6 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderRadius: 75,
+    backgroundColor: "#b5b5b5",
   },
 
   height: {
@@ -112,10 +118,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 130,
-    borderRadius: 66,
+    width: 130,
+    borderRadius: 65.5,
   },
 
   text: {
     paddingTop: 20,
+    fontFamily: "MarkerFelt-Thin",
+    fontSize: 20,
   },
 });
