@@ -23,6 +23,7 @@ export default class App extends Component {
       Animated.timing(this.state.animation, {
         toValue: 1,
         duration: 100,
+        useNativeDriver: false,
       }).start();
     } catch (e) {}
   };
@@ -30,7 +31,8 @@ export default class App extends Component {
   buttonUp = () => {
     Animated.timing(this.state.animation, {
       toValue: 0,
-      duration: 50,
+      duration: 20,
+      useNativeDriver: false,
     }).start();
   };
 
