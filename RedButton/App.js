@@ -69,9 +69,12 @@ export default class App extends Component {
               colors={["#6e6e6e", "#dedede", "#6e6e6e"]}
             >
               <Animated.View style={[styles.height, heightStyle]}>
-                <Animated.View
-                  style={[styles.inner, innerStyle]}
-                ></Animated.View>
+                <Animated.View style={innerStyle}>
+                  <LinearGradient
+                    colors={["#a10303", "#fc3838", "#a10303"]}
+                    style={[styles.inner]}
+                  />
+                </Animated.View>
               </Animated.View>
             </LinearGradient>
           </View>
@@ -103,14 +106,14 @@ const styles = StyleSheet.create({
 
   height: {
     borderRadius: 75,
-    backgroundColor: "#cc2b2b",
+    backgroundColor: "#850d0d",
   },
 
   inner: {
-    backgroundColor: "#fc3838",
     alignItems: "center",
     justifyContent: "center",
     height: 130,
+    borderRadius: 75,
   },
 
   text: {
