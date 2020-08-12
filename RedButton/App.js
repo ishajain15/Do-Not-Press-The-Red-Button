@@ -94,16 +94,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderRadius: 75,
-    backgroundColor: "rgb(143, 143, 143)",
+    backgroundColor: "#9e9d9d",
   },
 
   height: {
     borderRadius: 75,
-    backgroundColor: "rgb(227, 33, 11)",
+    backgroundColor: "#cc2b2b",
   },
 
   inner: {
-    backgroundColor: "red",
+    backgroundColor: "#fc3838",
     alignItems: "center",
     justifyContent: "center",
     height: 130,
