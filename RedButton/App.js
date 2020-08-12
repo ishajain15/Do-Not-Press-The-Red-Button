@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 130,
-    borderRadius: 75,
+    borderRadius: 66,
   },
 
   text: {
