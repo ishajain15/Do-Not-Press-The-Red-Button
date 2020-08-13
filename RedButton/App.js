@@ -144,5 +144,6 @@ const styles = StyleSheet.create({
   text: {
     paddingTop: 20,
     fontFamily: "Decalk Bold",
+    fontSize: 30,
   },
 });
