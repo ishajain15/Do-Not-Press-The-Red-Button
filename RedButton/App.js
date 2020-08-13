@@ -20,6 +20,7 @@ export default class App extends Component {
     animation: new Animated.Value(0),
     fontsLoaded: false,
     count: 0,
+    text: "Do not press",
   };
 
   async _loadFontsAsync() {
@@ -30,18 +31,6 @@ export default class App extends Component {
   componentDidMount() {
     this._loadFontsAsync();
   }
-
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  };
-
-  reset = () => {
-    this.setState({
-      count: 0,
-    });
-  };
 
   handleSound = async () => {
     try {
@@ -63,6 +52,113 @@ export default class App extends Component {
       duration: 20,
       useNativeDriver: false,
     }).start();
+  };
+
+  changeText = () => {
+    switch (this.state.count) {
+      case 0:
+        this.setState({
+          text: "No seriously",
+        });
+        break;
+
+      case 1:
+        this.setState({
+          text: "Stop it",
+        });
+        break;
+
+      case 2:
+        this.setState({
+          text: "Are you blind",
+        });
+        break;
+
+      case 3:
+        this.setState({
+          text: "Grrr...",
+        });
+        break;
+
+      case 4:
+        this.setState({
+          text: "Do not press the red button",
+        });
+        break;
+
+      case 5:
+        this.setState({
+          text: "Can you even read?",
+        });
+        break;
+
+      case 6:
+        this.setState({
+          text: "Do you want to explode?",
+        });
+        break;
+
+      case 7:
+        this.setState({
+          text: "I can make you explode",
+        });
+        break;
+
+      case 8:
+        this.setState({
+          text: "I'll do it",
+        });
+        break;
+
+      case 9:
+        this.setState({
+          text: "Ok fine",
+        });
+        break;
+
+      case 10:
+        this.setState({
+          text: "Keep pressing the button",
+        });
+        break;
+
+      case 11:
+        this.setState({
+          text: "I don't care anymore",
+        });
+        break;
+
+      case 12:
+        this.setState({
+          text: "I'm completely fine",
+        });
+        break;
+
+      case 13:
+        this.setState({
+          text: "Not annoyed at all",
+        });
+        break;
+
+      case 14:
+        this.setState({
+          text: "Ok that's it",
+        });
+        break;
+    }
+  };
+
+  increment = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+    this.changeText();
+  };
+
+  reset = () => {
+    this.setState({
+      count: 0,
+    });
   };
 
   render() {
@@ -109,7 +205,7 @@ export default class App extends Component {
                 </View>
               </View>
             </TouchableWithoutFeedback>
-            <Text style={styles.text}>Value: {this.state.count}</Text>
+            <Text style={styles.text}>{this.state.text}</Text>
           </LinearGradient>
         </View>
       );
@@ -156,8 +252,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    paddingTop: 20,
+    paddingTop: 40,
     fontFamily: "Decalk Bold",
-    fontSize: 30,
+    fontSize: 22,
+    textAlign: "center",
   },
 });
