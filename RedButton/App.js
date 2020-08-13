@@ -145,6 +145,12 @@ export default class App extends Component {
           text: "Ok that's it",
         });
         break;
+
+      case 15:
+        this.setState({
+          text: "Try pressing it now",
+        });
+        break;
     }
   };
 
@@ -169,7 +175,7 @@ export default class App extends Component {
       }),
     };
 
-    const heightStyle = {
+    const heightStyleReg = {
       marginTop: this.state.animation.interpolate({
         inputRange: [0, 1],
         outputRange: [-15, 0],
@@ -180,6 +186,17 @@ export default class App extends Component {
       }),
     };
 
+    const heightStyleSmall = {
+      marginTop: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-8, 0],
+      }),
+      paddingBottom: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [8, 0],
+      }),
+    };
+
     if (this.state.fontsLoaded) {
       return (
         <View style={styles.container}>
@@ -187,25 +204,54 @@ export default class App extends Component {
             colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
             style={styles.background}
           >
-            <TouchableWithoutFeedback
-              onPressIn={this.handleSound}
-              onPressOut={this.buttonUp}
-              onPress={this.increment}
-            >
-              <View style={styles.button}>
-                <View style={styles.outer}>
-                  <Animated.View style={[styles.height, heightStyle]}>
-                    <Animated.View style={innerStyle}>
-                      <LinearGradient
-                        colors={["#a10303", "#fc3838", "#a10303"]}
-                        style={styles.inner}
-                      />
+            {this.state.count <= 15 ? (
+              <TouchableWithoutFeedback
+                onPressIn={this.handleSound}
+                onPressOut={this.buttonUp}
+                onPress={this.increment}
+              >
+                <View style={styles.button}>
+                  <View style={styles.outer}>
+                    <Animated.View style={[styles.height, heightStyleReg]}>
+                      <Animated.View style={innerStyle}>
+                        <LinearGradient
+                          colors={["#a10303", "#fc3838", "#a10303"]}
+                          style={styles.inner}
+                        />
+                      </Animated.View>
                     </Animated.View>
-                  </Animated.View>
+                  </View>
                 </View>
+              </TouchableWithoutFeedback>
+            ) : (
+              <View>
+                <TouchableWithoutFeedback
+                  onPressIn={this.handleSound}
+                  onPressOut={this.buttonUp}
+                  onPress={this.increment}
+                >
+                  <View style={{ height: 60, width: 60 }}>
+                    <View style={styles.outer}>
+                      <Animated.View style={[styles.height, heightStyleSmall]}>
+                        <Animated.View style={innerStyle}>
+                          <LinearGradient
+                            colors={["#a10303", "#fc3838", "#a10303"]}
+                            style={{
+                              height: 40,
+                              width: 40,
+                              borderRadius: 20,
+                            }}
+                          />
+                        </Animated.View>
+                      </Animated.View>
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
-            </TouchableWithoutFeedback>
-            <Text style={styles.text}>{this.state.text}</Text>
+            )}
+            <Text style={styles.text}>
+              {this.state.count}: {this.state.text}
+            </Text>
           </LinearGradient>
         </View>
       );
