@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Image,
   Animated,
+  TouchableOpacity,
 } from "react-native";
 import { Audio } from "expo-av";
 
@@ -34,9 +35,27 @@ export default class App extends Component {
   }
 
   handleSound = async () => {
+    const sound = new Audio.Sound();
+    await sound.loadAsync(require("./assets/buttonclick.mp3"));
+    await sound.playAsync();
+  };
+
+  handlePress = async () => {
+    try {
+      this.handleSound();
+
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 20,
+        useNativeDriver: false,
+      }).start();
+    } catch (e) {}
+  };
+
+  handleDeath = async () => {
     try {
       const sound = new Audio.Sound();
-      await sound.loadAsync(require("./assets/buttonclick.mp3"));
+      await sound.loadAsync(require("./assets/womp womp womp womp.mp3"));
       await sound.playAsync();
 
       Animated.timing(this.state.animation, {
@@ -164,6 +183,17 @@ export default class App extends Component {
           text: "Time for plan B",
         });
         break;
+
+      case 18:
+        this.setState({
+          text: "Prepare to explode",
+        });
+        break;
+
+      case 19:
+        this.setState({
+          text: "Ok I'm done with you",
+        });
     }
   };
 
@@ -174,9 +204,16 @@ export default class App extends Component {
     this.changeText();
   };
 
+  death = () => {
+    this.setState({
+      text: "Mwahahaha. You Died",
+    });
+  };
+
   reset = () => {
     this.setState({
       count: 0,
+      text: "Do Not Press",
     });
   };
 
@@ -184,7 +221,7 @@ export default class App extends Component {
     const innerStyle = {
       borderRadius: this.state.animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [120, 75],
+        outputRange: [12, 75],
       }),
     };
 
@@ -202,21 +239,22 @@ export default class App extends Component {
     const heightStyleSmall = {
       marginTop: this.state.animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [-8, 0],
+        outputRange: [-7, 0],
       }),
       paddingBottom: this.state.animation.interpolate({
         inputRange: [0, 1],
-        outputRange: [8, 0],
+        outputRange: [7, 0],
       }),
     };
 
     if (this.state.fontsLoaded) {
       let component = null;
       switch (true) {
-        case this.state.count <= 15:
+        case this.state.count <= 15 ||
+          (this.state.count > 16 && this.state.count <= 18):
           component = (
             <TouchableWithoutFeedback
-              onPressIn={this.handleSound}
+              onPressIn={this.handlePress}
               onPressOut={this.buttonUp}
               onPress={this.increment}
             >
@@ -237,23 +275,58 @@ export default class App extends Component {
           break;
         case this.state.count > 15 && this.state.count < 18:
           component = (
+            <TouchableWithoutFeedback
+              onPressIn={this.handlePress}
+              onPressOut={this.buttonUp}
+              onPress={this.increment}
+            >
+              <View style={{ height: 60, width: 60 }}>
+                <View style={styles.outer}>
+                  <Animated.View style={[styles.height, heightStyleSmall]}>
+                    <Animated.View style={innerStyle}>
+                      <LinearGradient
+                        colors={["#a10303", "#fc3838", "#a10303"]}
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: 20,
+                        }}
+                      />
+                    </Animated.View>
+                  </Animated.View>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+          break;
+
+        case this.state.count > 18:
+          component = (
             <View>
               <TouchableWithoutFeedback
                 onPressIn={this.handleSound}
-                onPressOut={this.buttonUp}
                 onPress={this.increment}
               >
-                <View style={{ height: 60, width: 60 }}>
+                <View style={styles.speck}></View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPressIn={this.handleDeath}
+                onPressOut={this.buttonUp}
+                onPress={this.death}
+              >
+                <View style={styles.button}>
                   <View style={styles.outer}>
-                    <Animated.View style={[styles.height, heightStyleSmall]}>
+                    <Animated.View
+                      style={[
+                        styles.height,
+                        heightStyleReg,
+                        { backgroundColor: "#002a69" },
+                      ]}
+                    >
                       <Animated.View style={innerStyle}>
                         <LinearGradient
                           colors={["#a10303", "#fc3838", "#a10303"]}
-                          style={{
-                            height: 40,
-                            width: 40,
-                            borderRadius: 20,
-                          }}
+                          style={styles.inner}
                         />
                       </Animated.View>
                     </Animated.View>
@@ -262,10 +335,6 @@ export default class App extends Component {
               </TouchableWithoutFeedback>
             </View>
           );
-          break;
-
-        case this.state.count >= 18:
-          component = <Text>Continue From Here</Text>;
           break;
       }
       return (
@@ -283,6 +352,14 @@ export default class App extends Component {
             <Text style={styles.text}>
               {this.state.count}: {this.state.text}
             </Text>
+            <TouchableOpacity onPress={this.reset}>
+              <View style={styles.restart}>
+                <Image
+                  source={require("./assets/restart.png")}
+                  style={styles.image}
+                />
+              </View>
+            </TouchableOpacity>
           </LinearGradient>
         </View>
       );
@@ -347,5 +424,18 @@ const styles = StyleSheet.create({
     fontFamily: "Decalk Bold",
     fontSize: 22,
     textAlign: "center",
+  },
+
+  speck: {
+    width: 6,
+    height: 6,
+    backgroundColor: "#fc3838",
+    borderRadius: 3,
+  },
+
+  restart: {
+    height: 50,
+    width: 50,
+    paddingTop: 20,
   },
 });
