@@ -7,6 +7,7 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
+  Image,
   Animated,
 } from "react-native";
 import { Audio } from "expo-av";
@@ -273,6 +274,10 @@ export default class App extends Component {
             colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
             style={styles.background}
           >
+            <Image
+              source={require("./assets/warning.png")}
+              style={styles.image}
+            />
             <Text style={styles.warning}>Warning</Text>
             {component}
             <Text style={styles.text}>
@@ -298,7 +303,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  image: {
+    height: 70,
+    width: 70,
+  },
+
   warning: {
+    paddingTop: 20,
     paddingBottom: 40,
     fontFamily: "Decalk Bold",
     fontSize: 26,
