@@ -1,10 +1,10 @@
 # Do-Not-Press-The-Red-Button
 
-Creating an app using React Native. 
+Created an app using React Native: Do Not Press The Red Button
 
-Do not press the red button.
+Expo Link: https://expo.io/--/to-exp/exp%3A%2F%2Fexp.host%2F%40ishajain15%2FRedButton
 
-Progress as of 8/12/2020: 
+App as of 8/13/2020 (might update in the future): 
 
 
 ![](buttonanimation.gif)
