@@ -148,7 +148,13 @@ export default class App extends Component {
 
       case 15:
         this.setState({
-          text: "Try pressing it now",
+          text: "Aha take that!",
+        });
+        break;
+
+      case 16:
+        this.setState({
+          text: "Aw man",
         });
         break;
     }
@@ -198,57 +204,70 @@ export default class App extends Component {
     };
 
     if (this.state.fontsLoaded) {
-      return (
-        <View style={styles.container}>
-          <LinearGradient
-            colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
-            style={styles.background}
-          >
-            {this.state.count <= 15 ? (
+      let component = null;
+      switch (true) {
+        case this.state.count <= 15:
+          component = (
+            <TouchableWithoutFeedback
+              onPressIn={this.handleSound}
+              onPressOut={this.buttonUp}
+              onPress={this.increment}
+            >
+              <View style={styles.button}>
+                <View style={styles.outer}>
+                  <Animated.View style={[styles.height, heightStyleReg]}>
+                    <Animated.View style={innerStyle}>
+                      <LinearGradient
+                        colors={["#a10303", "#fc3838", "#a10303"]}
+                        style={styles.inner}
+                      />
+                    </Animated.View>
+                  </Animated.View>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+          break;
+        case this.state.count > 15 && this.state.count < 18:
+          component = (
+            <View>
               <TouchableWithoutFeedback
                 onPressIn={this.handleSound}
                 onPressOut={this.buttonUp}
                 onPress={this.increment}
               >
-                <View style={styles.button}>
+                <View style={{ height: 60, width: 60 }}>
                   <View style={styles.outer}>
-                    <Animated.View style={[styles.height, heightStyleReg]}>
+                    <Animated.View style={[styles.height, heightStyleSmall]}>
                       <Animated.View style={innerStyle}>
                         <LinearGradient
                           colors={["#a10303", "#fc3838", "#a10303"]}
-                          style={styles.inner}
+                          style={{
+                            height: 40,
+                            width: 40,
+                            borderRadius: 20,
+                          }}
                         />
                       </Animated.View>
                     </Animated.View>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
-            ) : (
-              <View>
-                <TouchableWithoutFeedback
-                  onPressIn={this.handleSound}
-                  onPressOut={this.buttonUp}
-                  onPress={this.increment}
-                >
-                  <View style={{ height: 60, width: 60 }}>
-                    <View style={styles.outer}>
-                      <Animated.View style={[styles.height, heightStyleSmall]}>
-                        <Animated.View style={innerStyle}>
-                          <LinearGradient
-                            colors={["#a10303", "#fc3838", "#a10303"]}
-                            style={{
-                              height: 40,
-                              width: 40,
-                              borderRadius: 20,
-                            }}
-                          />
-                        </Animated.View>
-                      </Animated.View>
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
+            </View>
+          );
+          break;
+
+        case this.state.count >= 18:
+          component = <Text>Continue From Here</Text>;
+          break;
+      }
+      return (
+        <View style={styles.container}>
+          <LinearGradient
+            colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
+            style={styles.background}
+          >
+            {component}
             <Text style={styles.text}>
               {this.state.count}: {this.state.text}
             </Text>
@@ -270,6 +289,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  warning: {
+    paddingBottom: 40,
+    fontFamily: "Decalk Bold",
+    fontSize: 26,
+    textAlign: "center",
+    color: "#de1f14",
   },
 
   button: {
