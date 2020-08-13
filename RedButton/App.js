@@ -55,7 +55,7 @@ export default class App extends Component {
   handleDeath = async () => {
     try {
       const sound = new Audio.Sound();
-      await sound.loadAsync(require("./assets/womp womp womp womp.mp3"));
+      await sound.loadAsync(require("./assets/womp-womp.mp3"));
       await sound.playAsync();
 
       Animated.timing(this.state.animation, {
@@ -325,7 +325,7 @@ export default class App extends Component {
                     >
                       <Animated.View style={innerStyle}>
                         <LinearGradient
-                          colors={["#a10303", "#fc3838", "#a10303"]}
+                          colors={["#375dc4", "#7a9eff", "#375dc4"]}
                           style={styles.inner}
                         />
                       </Animated.View>
@@ -349,9 +349,7 @@ export default class App extends Component {
             />
             <Text style={styles.warning}>Warning</Text>
             {component}
-            <Text style={styles.text}>
-              {this.state.count}: {this.state.text}
-            </Text>
+            <Text style={styles.text}>{this.state.text}</Text>
             <TouchableOpacity onPress={this.reset}>
               <View style={styles.restart}>
                 <Image
@@ -427,10 +425,10 @@ const styles = StyleSheet.create({
   },
 
   speck: {
-    width: 6,
-    height: 6,
+    width: 10,
+    height: 10,
     backgroundColor: "#fc3838",
-    borderRadius: 3,
+    borderRadius: 5,
   },
 
   restart: {
