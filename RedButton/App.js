@@ -157,6 +157,12 @@ export default class App extends Component {
           text: "Aw man",
         });
         break;
+
+      case 17:
+        this.setState({
+          text: "Time for plan B",
+        });
+        break;
     }
   };
 
@@ -267,6 +273,7 @@ export default class App extends Component {
             colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
             style={styles.background}
           >
+            <Text style={styles.warning}>Warning</Text>
             {component}
             <Text style={styles.text}>
               {this.state.count}: {this.state.text}
