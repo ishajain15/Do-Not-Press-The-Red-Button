@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Font from "expo-font";
 
 import {
   StyleSheet,
@@ -10,10 +11,24 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 
+let customFonts = {
+  "Decalk Bold": require("./assets/fonts/decalk.bold.ttf"),
+};
+
 export default class App extends Component {
   state = {
     animation: new Animated.Value(0),
+    fontsLoaded: false,
   };
+
+  async _loadFontsAsync() {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
+  }
+
+  componentDidMount() {
+    this._loadFontsAsync();
+  }
 
   handleSound = async () => {
     try {
@@ -56,33 +71,37 @@ export default class App extends Component {
       }),
     };
 
-    return (
-      <View style={styles.container}>
-        <LinearGradient
-          colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
-          style={styles.background}
-        >
-          <TouchableWithoutFeedback
-            onPressIn={this.handleSound}
-            onPressOut={this.buttonUp}
+    if (this.state.fontsLoaded) {
+      return (
+        <View style={styles.container}>
+          <LinearGradient
+            colors={["#b8b8b8", "#dedede", "#ffffff", "#dedede", "#b8b8b8"]}
+            style={styles.background}
           >
-            <View style={styles.button}>
-              <View style={styles.outer}>
-                <Animated.View style={[styles.height, heightStyle]}>
-                  <Animated.View style={innerStyle}>
-                    <LinearGradient
-                      colors={["#a10303", "#fc3838", "#a10303"]}
-                      style={styles.inner}
-                    />
+            <TouchableWithoutFeedback
+              onPressIn={this.handleSound}
+              onPressOut={this.buttonUp}
+            >
+              <View style={styles.button}>
+                <View style={styles.outer}>
+                  <Animated.View style={[styles.height, heightStyle]}>
+                    <Animated.View style={innerStyle}>
+                      <LinearGradient
+                        colors={["#a10303", "#fc3838", "#a10303"]}
+                        style={styles.inner}
+                      />
+                    </Animated.View>
                   </Animated.View>
-                </Animated.View>
+                </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.text}>DO NOT PRESS</Text>
-        </LinearGradient>
-      </View>
-    );
+            </TouchableWithoutFeedback>
+            <Text style={styles.text}>DO NOT PRESS</Text>
+          </LinearGradient>
+        </View>
+      );
+    } else {
+      return <Text>Didn't Work :(</Text>;
+    }
   }
 }
 
@@ -124,7 +143,6 @@ const styles = StyleSheet.create({
 
   text: {
     paddingTop: 20,
-    fontFamily: "MarkerFelt-Thin",
-    fontSize: 20,
+    fontFamily: "Decalk Bold",
   },
 });
