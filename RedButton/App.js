@@ -19,6 +19,7 @@ export default class App extends Component {
   state = {
     animation: new Animated.Value(0),
     fontsLoaded: false,
+    count: 0,
   };
 
   async _loadFontsAsync() {
@@ -29,6 +30,18 @@ export default class App extends Component {
   componentDidMount() {
     this._loadFontsAsync();
   }
+
+  increment = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      count: 0,
+    });
+  };
 
   handleSound = async () => {
     try {
@@ -81,6 +94,7 @@ export default class App extends Component {
             <TouchableWithoutFeedback
               onPressIn={this.handleSound}
               onPressOut={this.buttonUp}
+              onPress={this.increment}
             >
               <View style={styles.button}>
                 <View style={styles.outer}>
@@ -95,7 +109,7 @@ export default class App extends Component {
                 </View>
               </View>
             </TouchableWithoutFeedback>
-            <Text style={styles.text}>DO NOT PRESS</Text>
+            <Text style={styles.text}>Value: {this.state.count}</Text>
           </LinearGradient>
         </View>
       );
